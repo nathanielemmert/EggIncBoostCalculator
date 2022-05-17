@@ -3,7 +3,6 @@ import BoostTable from "./Elements/BoostTable";
 import SettingsForm from "./Elements/SettingsForm";
 import parseNumber from "./Main/helpers/parseNumber";
 import {calculateEggLayingRate, calculateIHR} from "./Main/helpers/calculateSettings";
-import roundFloat from "./Main/helpers/roundFloat";
 
 
 
@@ -18,7 +17,7 @@ function App() {
         *1.16   //Timeline Diversion
         *1.75   //Epic Comfy Nests
         *1.15;  //Metronome
-    let stringELR = roundFloat(ELR)
+    let stringELR = ELR.toPrecision(8)
     // let initialSettings = {
     //     artifacts: {
     //              //puzzleCube:{value:'',defaultValue: 0, influences: [], label:"Puzzle Cube: +", rightLabel:"%"},
@@ -74,36 +73,37 @@ function App() {
             //gusset: {value:'',defaultValue: 0, influences: [], label:"Gusset: +", rightLabel:"% Hab space"},
             chalice: {value:'',defaultValue: 0, influences: ["internalHatcheryRate"], label:"Chalice: +", rightLabel:"% chickens/min"},
             metronome: {value:'',defaultValue: 0, influences: ["eggLayingRate"], label:"Quantum Metronome: +", rightLabel:"% eggs/min"},
-            monocle: {value:'',defaultValue: 0, influences: [], label:"Dilithium Monocle: +", rightLabel:"%"},
+            //monocle: {value:'',defaultValue: 0, influences: [], label:"Dilithium Monocle: +", rightLabel:"%"},
             tachyonDeflector: {value:'',defaultValue: 0, influences: ["eggLayingRate"], label:"Tachyon Deflector(s): +", rightLabel:"% eggs/min (effect from others)"},
         },
         stones:{
         },
         research:{
-            epicComfyNests: {value: 0, step: 5, max:100, influences: ["eggLayingRate"], label:"Epic Comfy Nests:"},
-            comfyNests: {value: 0, step:10, max:500, influences: ["eggLayingRate"], label:"Comfortable Nests"},
-            henHouseAC: {value: 0, step: 5, max:250, influences: ["eggLayingRate"], label:"Hen House A/C"},
-            improvedGenetics: {value: 0, step:15, max:450, influences: ["eggLayingRate"], label:"Improved Genetics"},
-            timeCompression: {value: 0, step:10, max:200, influences: ["eggLayingRate"], label:"Time Compression"},
-            timelineDiversion: {value: 0, step: 2, max:100, influences: ["eggLayingRate"], label:"Timeline Diversion"},
+            epicComfyNests: {value: 100, step: 5, max:100, influences: ["eggLayingRate"], label:"Epic Comfy Nests:"},
+            comfyNests: {value: 500, step:10, max:500, influences: ["eggLayingRate"], label:"Comfortable Nests"},
+            henHouseAC: {value: 250, step: 5, max:250, influences: ["eggLayingRate"], label:"Hen House A/C"},
+            improvedGenetics: {value: 450, step:15, max:450, influences: ["eggLayingRate"], label:"Improved Genetics"},
+            timeCompression: {value: 200, step:10, max:200, influences: ["eggLayingRate"], label:"Time Compression"},
+            timelineDiversion: {value: 2, step: 2, max:100, influences: ["eggLayingRate"], label:"Timeline Diversion"},
             relativityOptimization: {value: 0, step:10, max:100, influences: ["eggLayingRate"], label:"Relativity Optimization"}
         },
         contractSettings:{
             timeRemaining: {value:''+(24*60*14), defaultValue: 0, label:"Time Remaining: \u00A0", rightLabel:"min"},
             tokenInterval: {value:'5',           defaultValue: 0, label:"Boost Token Interval: \u00A0", rightLabel:"min"},
             eggsRemaining: {value:'200q',        defaultValue: 0, label:"Contract Egg Goal: \u00A0", rightLabel:""},
-            initialPopulation: {value:'',        defaultValue: 0, label:"Starting Population: \u00A0", rightLabel:" Chickens"},
-            initialEggsLayed: {value:'',         defaultValue: 0, label:"Starting eggs layed: \u00A0", rightLabel:" "},
+            initialPopulation: {value:'',            defaultValue: 0, label:"Starting Population: \u00A0", rightLabel:" Chickens"},
+            initialEggsLayed: {value:'',            defaultValue: 0, label:"Starting eggs layed: \u00A0", rightLabel:" "},
             initialTokens: {value:'',            defaultValue: 0, label:"Starting tokens: \u00A0", rightLabel:" tokens"},
 
         },
         calculated:{
-            eggLayingRate: {value:''+stringELR, defaultValue: 0, updateFunction: calculateEggLayingRate, label:"Egg Laying Rate: \u00A0", rightLabel:" Eggs/Min/Chicken"},
+            eggLayingRate: {value:'', defaultValue: 0, updateFunction: calculateEggLayingRate, label:"Egg Laying Rate: \u00A0", rightLabel:" Eggs/Min/Chicken"},
             internalHatcheryRate: {value:'7440',       defaultValue: 0, updateFunction: calculateIHR, label:"Internal Hatchery Rate: \u00A0", rightLabel:"Chickens/Min/Hab"},
             //shippingCapactity: {value:'',           defaultValue: 0, updateFunction: ()=>0, label:"Shipping Capacity: \u00A0", rightLabel:""},
             //habCapacity: {value:'',           defaultValue: 0, updateFunction: ()=>0, label:"Max Hab Capacity: \u00A0", rightLabel:""},
         }
     }
+
     Object.keys(initialSettings).forEach(key =>{initialSettings[key].getValues =  function(){
         return Object.fromEntries(Object.entries(this).filter(([k,v])=>k!=='getValues').map(([k,v])=>{
             let o = this[k];
@@ -112,7 +112,7 @@ function App() {
         }));
     }});
 
-    //calculateEggLayingRate(initialSettings);/*TODO: this should be uncommented if there is any default research*/
+    calculateEggLayingRate(initialSettings);
 
     const [settings, setSettings] = useState(initialSettings);
     //console.log(settings.calculated.eggLayingRate)
@@ -124,7 +124,7 @@ function App() {
                 <SettingsForm settings={settings} setSettings = {setSettings}/>
             </div>
             <div > {/*style={{display: "block", height: "80vh",overflow: "scroll", width: "auto"}}>*/}
-                <BoostTable settings={settings}/>
+                <BoostTable boostCombos={setSettings}/>
             </div>
 
         </>
