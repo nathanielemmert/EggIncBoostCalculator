@@ -14,11 +14,14 @@ function SettingsItem({id, props, handleChange}) {
     }
     if(typeof defaultValue!="string")defaultValue=''
 
+
     return (
         <div style={{display:"table-row"}}>
             <label htmlFor={id} style={{display:"table-cell", textAlign:"right"}}>{label}</label>
-            <input id={id} value={itemState.val} type="text" autoComplete={"off"} style={{display:"table-cell"}}  onChange={handleChange} size={6}/>{/*USE ONBLUR TO ONLY UPDATE ON FOCUS LOSS*/}
-            <label htmlFor={id} style={{display:"table-cell", textAlign:"left"}}>{rightLabel}</label>
+            <div style={{display:"table-cell", textAlign:"left"}}>
+                <input id={id} value={itemState.val} type="text" autoComplete={"off"}  onChange={handleChange} size={6}/>{/*USE ONBLUR TO ONLY UPDATE ON FOCUS LOSS*/}
+                <label htmlFor={id} style={{ textAlign:"left"}}>{rightLabel}</label>
+            </div>
         </div>
 
     );

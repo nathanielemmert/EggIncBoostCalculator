@@ -50,6 +50,7 @@ function parseNumber(str){//TODO: improve performance
 }
 */
 function parseNumber(str){//TODO: improve performance
+    if(typeof str==="number")str=str.toExponential().replace("e","E")
     if (typeof str != "string")return str;
     if(str==='')return str;//TODO: hack for settingsform, to always make new input not equal to blank
     let r = str;

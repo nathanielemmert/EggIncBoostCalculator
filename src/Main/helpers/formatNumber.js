@@ -1,3 +1,4 @@
+import roundFloat from "./roundFloat";
 
 const pows = {
     0:" ",
@@ -29,15 +30,24 @@ const pows = {
 
 
 
-function formatNumber(number,decimalDigits){
-    //console.log(number)
-    const f =  number.toLocaleString("en-US",{notation:"scientific"})
-    let [num,pow] = f.split("E").map(n => Number.parseFloat(n))
-    for (let i = 0; i < 3 && pow%3!==0; i++) {
+function formatNumber(number,decimalDigits,precision){//TODO: should allow display of
+    if(typeof number ==="string")number = Number(number)
+    //console.log(number.toExponential())
+    if(!isFinite(number))return number
+    const f =  number.toExponential()
+    let [num,pow] = f.split("e").map(n => Number.parseFloat(n))
+    num/=10**Math.max(0, -pow);pow-=Math.min(0, pow)
+    for (let i = 0; i < 3 && pow%3!==0 && pow>0; i++) {//TODO: if numbers base is greater than uV, display in terms of uV like saladfork does for Td
         num*=10;
         pow-=1;
     }
-    return (Math.floor((num * 10**decimalDigits)) / 10**decimalDigits).toFixed(decimalDigits) +pows[pow]
+    if(pow===3){num*=1000;pow-=3}
+    if(precision!=null)return parseFloat(num.toPrecision(precision)).toLocaleString('en-US', {
+        minimumFractionDigits: precision-num.toFixed().length,
+        maximumFractionDigits: precision
+    })+pows[pow];
+    if(decimalDigits===undefined)return roundFloat(num)+pows[pow]
+    return (Math.round((num * 10**decimalDigits)) / 10**decimalDigits).toFixed(decimalDigits) +pows[pow]//TODO: originally round was floor
 
 
 }
