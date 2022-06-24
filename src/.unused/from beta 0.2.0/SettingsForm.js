@@ -81,8 +81,19 @@ function SettingsForm({appState, appSettings, setAppState}) {
         <div style={{margin:"10px"}}>
             <div style={{display:"inline-block",verticalAlign:"top", marginRight:"2em"}}>
 
-                <div  style={epicResearchGroupBorderStyle}>
-                    <h3>Step 1: Input your Epic Research and artifacts <br/></h3>
+                <div>
+                    <HabSelector  formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={artifactGroupBorderStyle}/>
+                    <SettingsResearchGroup groupName={"internal_hatchery_rate"} formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
+                    <SettingsResearchGroup groupName={"hab_capacity"}           formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
+                </div>
+                <div>
+                    <VehicleSelector  formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={artifactGroupBorderStyle}/>
+                    <SettingsResearchGroup groupName={"egg_laying_rate"}        formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
+                    <SettingsResearchGroup groupName={"shipping_capacity"}      formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
+                    <SettingsResearchGroup groupName={"fleet_size"}             formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
+                    {/*TODO: research for fleet_size, also add code for number of habs*/}
+                </div>
+                <div>
                     <SettingsResearchGroup groupName={"epic"}      formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={epicResearchGroupBorderStyle}/>
                     <SettingsArtifactGroup groupName={"artifacts"} formState={formState} appSettings={appSettings} updateForm={updateForm} borderStyle={artifactGroupBorderStyle} />
                     <StoneSelector  formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={artifactGroupBorderStyle}/>
@@ -90,31 +101,8 @@ function SettingsForm({appState, appSettings, setAppState}) {
                     {/*TODO: ADD STONES INPUT*/}
                 </div>
 
-                <div style={epicResearchGroupBorderStyle}>
-                    <h3>Step 2: Input Common Research, Habs, and Vehicles <br/></h3>
-                    <b>Note: research is assumed to stay the same for the entire contract. Therefore, the numbers wont be accurate if you upgrade any research after boosting.<br/>
-                        For best results, input each group of researches as what you think they will be before and after you boost, respectively</b>
-
-                    <div style={{border:"1px solid black", width:"fit-content", margin: "10px"}}>
-                        <b>Before Boost: <br/></b>
-                        <HabSelector  formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={artifactGroupBorderStyle}/>
-                        <SettingsResearchGroup groupName={"internal_hatchery_rate"} formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
-                        <SettingsResearchGroup groupName={"hab_capacity"}           formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
-                    </div>
-                    <div style={{border:"1px solid black", width:"fit-content", margin: "10px"}}>
-                        <b>After Boost: <br/></b>
-                        <VehicleSelector  formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={artifactGroupBorderStyle}/>
-                        <SettingsResearchGroup groupName={"egg_laying_rate"}        formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
-                        <SettingsResearchGroup groupName={"shipping_capacity"}      formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
-                        <SettingsResearchGroup groupName={"fleet_size"}             formState={formState} appSettings={appSettings} updateForm={updateForm} updateMultipleForm={updateMultipleForm} borderStyle={researchGroupBorderStyle}/>
-                        {/*TODO: research for fleet_size, also add code for number of habs*/}
-                    </div>
-                </div>
 
 
-
-                <div style={{border:"1px solid black", width:"fit-content", margin: "10px"}}>
-                    <h3>Step 3: Double check that the values below are correct, and press submit <br/></h3>
                 <div style={{border:"1px solid black", width:"fit-content", margin: "10px"}}>
                     <div>
                         <div style={{display:"inline"}}><h2 style={{display:"inline"}}>Required values:</h2></div>
@@ -125,7 +113,6 @@ function SettingsForm({appState, appSettings, setAppState}) {
                     <SettingsGroup groupName={"calculated"} title={"Farm Stats"} formState={formState} appSettings={appSettings} updateForm={updateForm} borderStyle={settingsGroupBorderStyle}/>
                     <SettingsGroup groupName={"contractSettings"} title={"Contract Settings"} formState={formState} appSettings={appSettings} updateForm={updateForm} borderStyle={settingsGroupBorderStyle}/>
 
-                </div>
                 </div>
 
                 <button style={{marginLeft:"10px", fontSize:"2em"}} onClick={handleSubmitButton}>Submit</button>
