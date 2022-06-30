@@ -2,6 +2,7 @@ import React from 'react';
 import SettingsItem from "./SettingsItem";
 import parseNumber from "../../../Main/helpers/parseNumber";
 import {calculateSettings} from "../../../Main/calculateSettings";
+import DurationPicker from "../Duration/DurationPicker";
 
 function SettingsGroup({groupName, title, formState, appSettings, updateForm, borderStyle}) {
 
@@ -24,6 +25,14 @@ function SettingsGroup({groupName, title, formState, appSettings, updateForm, bo
             <div>
                 {Object.entries(appSettings.getGroup(groupName)).filter(([settingName,settings]) => !settings.hidden).map(([settingName,settings]) => {
                     settings.value = formState[settingName]
+                    if(settingName==='timeRemaining')return (
+                        <div style={{display:"table-row"}}>
+                            <label htmlFor={settingName} style={{display:"table-cell", textAlign:"right"}}>{"Time Remaining:"}</label>
+                            <div style={{display:"table-cell"}}>
+                                <DurationPicker formState={formState} updateForm={updateForm} id={"timeRemaining"}/>
+                            </div>
+                        </div>
+                        )
                     return <SettingsItem key={settingName}
                                          id={settingName}
                                          props={settings}

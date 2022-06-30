@@ -18,7 +18,7 @@ function SettingsItem({id, props, handleChange}) {
     return (
         <div style={{display:"table-row"}}>
             <label htmlFor={id} style={{display:"table-cell", textAlign:"right"}}>{label}</label>
-            <div style={{display:"table-cell", textAlign:"left"}}>
+            <div style={{display:"table-cell", textAlign:"left", whiteSpace:"nowrap"}}>
                 <input id={id} value={itemState.val} type="text" autoComplete={"off"}  onChange={handleChange} size={6}/>{/*USE ONBLUR TO ONLY UPDATE ON FOCUS LOSS*/}
                 <label htmlFor={id} style={{ textAlign:"left"}}>{rightLabel}</label>
             </div>

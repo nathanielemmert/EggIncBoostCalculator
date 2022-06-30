@@ -507,7 +507,7 @@ function SettingsArtifactItem({ artifact, oldProps, handleChange}) {
 
     return (
         <form style={{display:"table-row", marginTop:"2px", marginBottom:"2px", textAlign:"left"}}>
-            <label htmlFor={artifact} style={{display:"table-cell", textAlign:"right"}}>{label}</label>
+            <label htmlFor={artifact} style={{display:"table-cell", textAlign:"right", whiteSpace:"nowrap"}}>{label}</label>
             <select name="tier" id="tier" style={{alignItems:"left"}} onChange={handleChangeSelectedArtifact}>
                 <option key={""} value={""}>{""}</option>
                 {artifacts[artifact].tiers.map(tier =>

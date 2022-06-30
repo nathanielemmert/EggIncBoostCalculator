@@ -117,11 +117,11 @@ function SettingsResearchItem({ props, handleChange}) {
                 <label htmlFor={id}>{label}</label>
             </div>
 
-            <div style={{display:"table-cell", textAlign:"right"}}>
+            <div style={{display:"table-cell", textAlign:"left"}}>
                 <input type="range" value={sliderValue} id={id} min={0} max={sliderMax} step={sliderStep} style={{display:"table-cell"}} onChange={changeResearch}/>
 
-                <div style={{display:"inline-block"}}>
-                    <label htmlFor={id+"percent"} >{leftLabel}</label>
+                <div style={{display:"inline-block", whiteSpace:"nowrap"}}>
+                    <label htmlFor={id+"percent"} style={{whiteSpace:"nowrap", textAlign:"right"}}>{leftLabel}</label>
                     <input type="number" value={boxValue} id={id+"percent"}  min="0" max={boxMax} step={boxStep} style={{width: "4em"}} onChange={changeResearch}/>
                     <label htmlFor={id+"percent"} >{rightLabel}</label>
                 </div>
